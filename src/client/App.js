@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { Col, Container, Row, Button, Card, CardBody, Form, FormGroup, Input, Label } from "reactstrap";
-import AwardCard from "./component/AwardCard";
+import { Col, Container, Row, Form, FormGroup, Input, Label, Card, CardBody, Button } from "reactstrap";
+import AwardCard from "./components/AwardCard";
+import KudosForm from "./components/KudosForm";
 
 class App extends Component {
 
@@ -9,49 +10,44 @@ class App extends Component {
     this.state = {
       users: [
         {
-          name: "Alia",
-          userId: 10457,
-          position: "Solutions Engineer"
+          userId: 45089,
+          name: "Owen",
+          position: "Captian of the Breakroom"
         },
         {
-          name: "Cody",
-          userId: 10850,
-          position: "Senior Functional Consultant"
+          userId: 223,
+          name: "Brooke",
+          position: "Winner of All Dance-Offs"
         },
         {
-          name: "Ana",
-          userId: 32481,
-          position: "Lead Solutions Engineer"
-        },
-        {
-          name: "Leon",
-          userId: "02481",
-          position: "Lead Solutions Engineer"
+          userId: 6582,
+          name: "Gobi",
+          position: "King of Mid-Day Naps"
         }
       ],
-
       awards: [
         {
           id: 1,
           title: "Best Boss Award!",
-          comment: "Thanks for always looking out for us."
-        },
-        {
+          comment: "Thanks for always looking out for us.",
+          sender: "Fabian",
+          receiver: "Leon"
+        }, {
           id: 2,
           title: "Longest Commute Award!",
-          comment: "I can't believe Leslie makes it to work as often as she does."
-        },
-        {
+          comment: "I can't believe Laura makes it to work as often as she does.",
+          sender: "Archit",
+          receiver: "Laura"
+        }, {
           id: 3,
           title: "Most likely to nap at work!",
-          comment: "Maybe you need more coffee."
+          comment: "Maybe you need more coffee.",
+          sender: "Gobi",
+          receiver: "Owen"
         }
       ]
     }
   }
-
-
-
 
   render() {
     return (
@@ -71,31 +67,12 @@ class App extends Component {
             </Card>
           </Col>
           <Col md="12" lg="9">
-
-            {this.state.awards.map(e => <p>{<AwardCard title={e.title} comment={e.comment}/>}</p>)}
-
+            {this.state.awards.map(elem => <AwardCard user={elem} />)}
           </Col>
         </Row>
         <Row>
           <Col md="12">
-            <Form>
-
-              <FormGroup>
-                <Label>Give Kudos to</Label>
-                <Input type="select">
-
-                  {this.state.users.map(user => <option>({user.userId}) {user.name} {user.position}</option>)}
-                  <option>{this.state.users.length}</option>
-
-                </Input>
-              </FormGroup>
-              <FormGroup>
-                <Input type="text" placeholder="Kudos Title" />
-              </FormGroup>
-              <FormGroup>
-                <Input type="textarea" placeholder="Kudos text" />
-              </FormGroup>
-            </Form>
+            <KudosForm users={this.state.users} />
           </Col>
         </Row>
       </Container>
