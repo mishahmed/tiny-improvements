@@ -6,12 +6,9 @@
   "scripts": {
     "build": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "concurrently --kill-others \"webpack --watch\" \"nodemon --delay 1500ms src/server/index\"",
+    "start": "concurrently --kill-others \"webpack --watch\" \"nodemon src/server/index\"",
     "start:server": "nodemon src/server/index",
     "heroku-postbuild": "npm run build"
-  },
-  "events": {
-    "restart": "fuser -k 8000/tcp ;"
   },
   "repository": {
     "type": "git",

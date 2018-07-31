@@ -1,3 +1,2 @@
-# Tiny Improvements
-_________________
-Full-stack App built on the MERN. Made with ❤️.
+# fs-intensive-project
+starting point code for application being built to in FS intensive course

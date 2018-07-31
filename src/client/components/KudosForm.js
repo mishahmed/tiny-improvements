@@ -1,21 +1,42 @@
 import React from "react";
-import { Col, Container, Row, Form, FormGroup, Input, Label, Button, Card, CardBody } from "reactstrap";
+import { Form, FormGroup, Label, Input, Button } from "reactstrap";
 
 const KudosForm = props => (
-    <Form>
-        <FormGroup>
-            <Label>Give Kudos to</Label>
-            <Input type="select">
-                {props.users.map(element => <option>{element.name}</option>)}
-            </Input>
-        </FormGroup>
-        <FormGroup>
-            <Input type="text" placeholder="Kudos Title" />
-        </FormGroup>
-        <FormGroup>
-            <Input type="textarea" placeholder="Kudos text" />
-        </FormGroup>
-    </Form>
+  <Form>
+    <FormGroup>
+      <Label>Give Kudos to</Label>
+      <Input type="select"
+        onChange={props.updateReceiver}>
+        value={props.receiver}
+      </Input>
+    </FormGroup>
+    <FormGroup>
+      <Input type="text" placeholder="Kudos Title"
+        onChange={props.updateKudosTitle}
+        value={props.kudosTitle}
+      />
+    </FormGroup>
+    <FormGroup>
+      <Input type="text" placeholder="Kudos Text"
+        onChange={props.updateKudosText}
+        value={props.kudosText}
+      />
+    </FormGroup>
+
+    {/* <FormGroup> */}
+    {/* <Input */}
+    {/* // type="textarea"
+      // placeholder="Kudos text"
+      // value={props.kudosText}
+      // onChange={props.updateKudosText}
+      // onChange={props.updateKudosTitle}
+      // onChange={props.updateReceiver}
+      /> */}
+    {/* </FormGroup> */}
+    <FormGroup>
+      <Button onClick={props.postData}> Give Kudos </Button>
+    </FormGroup>
+  </Form >
 )
 
 export default KudosForm;
