@@ -10,49 +10,35 @@ app.use(bodyParser.json());
 
 app.use(express.static("public"));
 
-const awards = [
-    {
-        id: 1,
-        title: "Best Boss Award!",
-        comment: "Thanks for always looking out for us."
-    },
-    {
-        id: 2,
-        title: "Longest Commute Award!",
-        comment: "I can't believe Leslie makes it to work as often as she does."
-    },
-    {
-        id: 3,
-        title: "Most likely to nap at work!",
-        comment: "Maybe you need more coffee."
-    }
-]
+// Salesforce query to return data
+app.get("/api/filter/:id", (req, res) => {
+  salesForce.query(`SELECT Id, Name, Comment__c, Receiver__r.Name, Sender__r.Name FROM Kudos__c WHERE Receiver__r.Name = '` + req.params.id + `'`).then((data) => {
+    // return all of the fields from the object Kudos in SalesForce
+    res.json(data.records.map(record => record._fields))
+  });
+});
 
-const users = [{
-    userId: 45089,
-    name: "Owen",
-    position: "Captian of the Breakroom"
-},
-{
-    userId: 223,
-    name: "Brooke",
-    position: "Winner of All Dance-Offs"
-},
-{
-    userId: 6582,
-    name: "Gobi",
-    position: "King of Mid-Day Naps"
-}
-]
 
-app.get("/api/kudos", (req, res) => res.json(awards));
-app.get("/api/users", (req, res) => res.json(users));
+app.get("/api/kudos", (req, res) => {
+  salesForce.query(`SELECT Id, Name, Comment__c, Receiver__r.Name, Sender__r.Name FROM Kudos__c`).then((data) => {
+    // return all of the fields from the object Kudos in SalesForce
+    res.json(data.records.map(record => record._fields))
+  });
+});
+
+app.get("/api/users", (req, res) => {
+  salesForce.query(`SELECT id, name FROM Tiny_Improvements_User__c`).then((data) => {
+    // return all of the fields from the object Tiny_Improvements_User__c in SalesForce
+    res.json(data.records.map(record => record._fields))
+  });
+});
 
 app.post("/api/kudos", (req, res) => {
-    awards.push(req.body);
-    res.json(awards);
+  salesForce.createKudos(req.body).then(() => {
+    res.json({ success: true })
   });
+})
 
 app.listen(PORT, function () {
-    console.log(`We are connected 🌎 on PORT ${PORT}`);
+  console.log(`We are connected 🌎 on PORT ${PORT}`);
 });

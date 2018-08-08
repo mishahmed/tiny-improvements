@@ -4,39 +4,31 @@ import { Form, FormGroup, Label, Input, Button } from "reactstrap";
 const KudosForm = props => (
   <Form>
     <FormGroup>
+    <Label>Give Kudos from</Label>
+      <Input type="select" onChange={props.updateSender}>
+        <option>Please select a Sender!</option>
+        {props.users.map(element => <option>{element.name}</option>)}
+      </Input>
       <Label>Give Kudos to</Label>
-      <Input type="select"
-        onChange={props.updateReceiver}>
-        value={props.receiver}
+      <Input type="select" onChange={props.updateReceiver}>
+      <option>Please select a Receiver!</option>
+        {props.users.map(element => <option>{element.name}</option>)}
       </Input>
     </FormGroup>
     <FormGroup>
-      <Input type="text" placeholder="Kudos Title"
-        onChange={props.updateKudosTitle}
-        value={props.kudosTitle}
+      <Input type="text" placeholder="Kudos Title" onChange={props.updateTitle}/>
+    </FormGroup>
+    <FormGroup>
+      <Input 
+        type="textarea" 
+        placeholder="Kudos text"
+        onChange={props.updateComment}
       />
     </FormGroup>
     <FormGroup>
-      <Input type="text" placeholder="Kudos Text"
-        onChange={props.updateKudosText}
-        value={props.kudosText}
-      />
+      <Button onClick={props.postData}> Submit </Button>
     </FormGroup>
-
-    {/* <FormGroup> */}
-    {/* <Input */}
-    {/* // type="textarea"
-      // placeholder="Kudos text"
-      // value={props.kudosText}
-      // onChange={props.updateKudosText}
-      // onChange={props.updateKudosTitle}
-      // onChange={props.updateReceiver}
-      /> */}
-    {/* </FormGroup> */}
-    <FormGroup>
-      <Button onClick={props.postData}> Give Kudos </Button>
-    </FormGroup>
-  </Form >
+  </Form>
 )
 
 export default KudosForm;

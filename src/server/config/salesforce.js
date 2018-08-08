@@ -13,7 +13,7 @@ const salesForceLoginInfo = {
     password: 'student1t4knpcaLF3q8PSgzx7p5hGf9'
 }
 
-const salesForceQueryFunction = (conn, loginInfo) => async (query) => {
+const salesForceQueryFunction = (conn, loginInfo) => async (query) =>{
     // Determine if the application is connected to the
     // salesForce server, if not, login and wait for
     // the connection to succeed
@@ -27,6 +27,25 @@ const salesForceQueryFunction = (conn, loginInfo) => async (query) => {
 }
 
 
+const createKudos = (conn, loginInfo) => async (insertObj) => {
+  // Determine if the application is connected to the
+  // salesForce server, if not, login and wait for
+  // the connection to succeed
+  if (!conn.oauth) {
+    await conn.authenticate(loginInfo);
+  }
+
+  const newKudos = nforce.createSObject('Kudos__c');
+  newKudos.set('Comment__c', insertObj.Comment__c);
+  newKudos.set('Name', insertObj.Name);
+  newKudos.set('Receiver__c', insertObj.Receiver__c);
+  newKudos.set('Sender__c', insertObj.Sender__c);
+
+  return conn.insert({ sobject: newKudos });
+}
+
 module.exports = {
-    query: salesForceQueryFunction(salesForceConnection, salesForceLoginInfo)
+    query: salesForceQueryFunction(salesForceConnection, salesForceLoginInfo),
+    createKudos: createKudos(salesForceConnection, salesForceLoginInfo)
 };
+
